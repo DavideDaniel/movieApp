@@ -7,17 +7,34 @@ var counter = 0;
 
 var firstImg = $( "#i1" )
     .first();
-var lastImg = $( "#i3" )
+var lastImg = $( "#i10" )
     .last();
 
+var xhr = new XMLHttpRequest();
 
+var movieRequest = function () {
+    var url = "http://omdbapi.com/?t=" + movies[ counter ]
+    xhr.open( "GET", url );
 
-var xhr = new XMLHttpRequest(); 
+    counter++
+
+    while ( counter >= movies.length ) {
+        counter = 0;
+    }
+}
+
+var generateMovieList = function () {
+    var url = "http://omdbapi.com/?t="
+    movies.forEach( function ( name ) {
+        // xhr.open("GET", url+name)
+        movieRequest();
+    } )
+}
 
 var loadMovie = function ( elem ) {
 
     xhr.addEventListener( 'load', function ( e ) {
-        var d = xhr.responseText 
+        var d = xhr.responseText
         var parsed = JSON.parse( d );
 
         console.log( elem );
@@ -27,41 +44,16 @@ var loadMovie = function ( elem ) {
     xhr.send();
 }
 
-var searchMovie = function(name) {
-var input = document.querySelector( "input" )
-var safe_url = encodeURI(name)
-var url = "http://omdbapi.com/?t=" + safe_url;
+var searchMovie = function ( name ) {
+    var input = document.querySelector( "input" )
+    var safe_url = encodeURI( name )
+    var url = "http://omdbapi.com/?t=" + safe_url;
 }
-
-var generateMovieList = function() {
-    var url = "http://omdbapi.com/?t="
-    movies.forEach(function(name){
-        // xhr.open("GET", url+name)
-        movieRequest();
-    })
-}
-
-
-
-var movieRequest = function () {
-    var url = "http://omdbapi.com/?t=" + movies[ counter ]
-    xhr.open( "GET", url );
-
-    
-
-    counter++
-
-    while ( counter >= movies.length ) {
-        counter = 0;
-    }
-
-}
-
 
 var posterDisplay = function ( elem, parsed ) {
     xhr.addEventListener( 'load', function () {
         var poster = 'background:url("' + parsed.Poster + '") no-repeat'
-        console.log(poster);
+        console.log( poster );
         $( elem )
             .attr( 'style', poster )
     } )
@@ -84,15 +76,15 @@ var displayInfo = function ( elem ) {
     } )
 }
 
-// var nextMovie = function(){
+$( document )
+    .ready( function () {
+        generateMovieList();
+        $( "image" )
+            .each( function ( index ) {
+                movies.loadMovie( index )
+            } )
 
-// }
-$(document).ready(function(){
-    loadMovie(firstImg);
-
-})
-
-     
+    } )
 
 $( ".main" )
 
@@ -112,8 +104,6 @@ $( ".main" )
     loop: false
 
 } )
-
-
 
 $( '#i1' )
     .click( function () {
@@ -148,4 +138,3 @@ $( '#b3' )
         $( '#m3' )
             .removeClass( 'flip' );
     } )
-
