@@ -89,7 +89,7 @@ $( ".main" )
     direction: "horizontal",
     easing: "ease",
     animationTime: 500,
-    loop: true
+    loop: false
 
 } )
 

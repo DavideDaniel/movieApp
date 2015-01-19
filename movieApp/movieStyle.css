@@ -1,3 +1,4 @@
+/*Flipping*/
 
 li.image {
 
@@ -35,10 +36,6 @@ li.image {
     -moz-transform: rotateX(0deg);
     -moz-transform-style: preserve-3d;
     -moz-backface-visibility: hidden;
-    /* -- transition is the magic sauce for animation -- */
-
--o-transition: all .4s ease-in-out;
-    -ms-transition: all .4s ease-in-out;
     -moz-transition: all .4s ease-in-out;
     -webkit-transition: all .4s ease-in-out;
     transition: all .4s ease-in-out;
@@ -80,6 +77,7 @@ li.image {
     -webkit-transform: rotateX(0deg) rotateY(0deg);
     -moz-transform: rotateX(0deg) rotateY(0deg);
 }
+
 /*Non-flipping*/
 
 .section {
@@ -248,4 +246,3 @@ nav.foot {
     -moz-box-shadow: 0px -5px 5px rgba(0, 0, 0, 0.85);
     box-shadow: 0px -5px 5px rgba(0, 0, 0, 0.85);
 }
-nav.foot: :before {}
