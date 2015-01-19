@@ -3,34 +3,33 @@ var movies = [ "Boyhood", "Whiplash", "Nightcrawler", "Gloria", "Gravity",
     "Kill Bill: Vol. 2"
 ]
 
-// For Server
-// ==========
-
-// var movieDB = [];
-
-// var movieObj = function ( title, actors, director, imdbRating, poster, plot ) {
-//     this.title = title
-//     this.actors = actors
-//     this.director = director
-//     this.imdbRating = imdbRating
-//     this.poster = poster
-//     this.plot = plot
-// }
-
 var counter = 0;
 
+var firstImg = $( "#i1" )
+    .first();
+var lastImg = $( "#i3" )
+    .last();
+
 var xhr = new XMLHttpRequest(); //making an object from a constructor
-var loadMovie = function () {
+
+var loadMovie = function ( elem ) {
+
     xhr.addEventListener( 'load', function ( e ) {
-        var img1 = document.getElementById( "i1" )
-        var img2 = document.getElementById( "i2" )
-        var img3 = document.getElementById( "i3" )
 
         var d = xhr.responseText //comes in in JSON so you will have to parse it
         var parsed = JSON.parse( d );
 
-        $( "img" )
-            .attr( "src", parsed.Poster )
+        // $( elem )
+        // .attr( "src", parsed.Poster )
+        console.log( elem );
+        posterDisplay( elem, parsed );
+        // var nextImg = $( elem ).next();
+
+        // console.log( nextImg );
+
+        if ( elem == lastImg ) {
+            firstImg = lastImg.next();
+        }
         // posterDisplay( parsed )
         // img1.src = parsed.Poster;
         // img2.src = parsed.Poster;
@@ -42,8 +41,6 @@ var loadMovie = function () {
         //     parsed.imdbRating, parsed.Poster, parsed.Plot );
 
         // movieDB.push( movie )
-
-
 
         // movies.forEach( function ( movItem ) {
         //     if ( movie.title.indexOf( movItem.title ) < 0 ) movieDB.push( movie );
@@ -61,8 +58,20 @@ var loadMovie = function () {
 
     } )
 }
-loadMovie();
 
+
+var posterDisplay = function ( elem, parsed ) {
+    xhr.addEventListener( 'load', function ( e ) {
+        var d = xhr.responseText //comes in in JSON so you will have to parse it
+        var parsed = JSON.parse( d );
+        $( elem )
+            .attr( "src", parsed.Poster )
+        // .each( function () {
+        // $( this )
+
+        // } )
+    } )
+}
 // function posterDisplay = function (movie, div){
 //     var url = " http://omdbapi.com/?t=" + movie;
 //     var xhr = new XMLHttpRequest();
@@ -74,28 +83,35 @@ loadMovie();
 //     });
 //     xhr.send();
 // };
+// $( "img" ) var posterDisplay = function ( parsed ) {
+//     xhr.addEventListener( 'load', function ( e ) {
+//             var d = xhr.responseText //comes in in JSON so you will have to parse it
+//             var parsed = JSON.parse( d );
+//             $( this )
+//                 .attr( "src", parsed.Poster )
+//             // .each( function () {
+//             // $( this )
 
-var posterDisplay = function ( parsed ) {
+//             // } )
+//         }
 
-    // .each( function () {
-    // $( this )
+var loadNextMovie = function () {
 
-    // } )
 }
-
 var displayInfo = function () {
 
 }
 var urlArray = [];
-console.log(urlArray)
+console.log( urlArray );
+
 var movieRequest = function () {
     var input = document.querySelector( "input" )
     var description = document.querySelector( "description" )
     var url = "http://omdbapi.com/?t=" + movies[ counter ]
-    urlArray.push(url)
+    urlArray.push( url )
     xhr.open( "GET", url );
     console.log( url );
-
+    loadMovie( firstImg );
     xhr.send();
     counter++
     while ( counter >= movies.length ) {
@@ -106,7 +122,6 @@ var movieRequest = function () {
 }
 
 // var nextMovie = function(){
-
 
 // }
 
@@ -134,13 +149,8 @@ $( ".main" )
 
 } )
 
-$( "section" )
-    .next(
-
-
-)
 $( 'img' )
-    .click(function () {
+    .click( function () {
         $( '.inside' )
             .addClass( 'flip' );
     } )
