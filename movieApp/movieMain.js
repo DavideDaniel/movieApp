@@ -22,7 +22,6 @@ var loadMovie = function ( elem ) {
         console.log( elem );
         posterDisplay( elem, parsed );
 
-
     } )
 }
 var movieRequest = function () {
@@ -94,15 +93,36 @@ $( ".main" )
 
 } )
 
-$( '.image' )
+$( '#i1' )
     .click( function () {
-        $( '.inside' )
+        $( '#m1' )
             .addClass( 'flip' );
-            displayInfo()
+        displayInfo()
     } )
-
-$( '.movieInfo' )
+$( '#i2' )
     .click( function () {
-        $( '.inside' )
+        $( '#m2' )
+            .addClass( 'flip' );
+        displayInfo()
+    } )
+$( '#i3' )
+    .click( function () {
+        $( '#m3' )
+            .addClass( 'flip' );
+        displayInfo()
+    } )
+$( '#b1' )
+    .click( function () {
+        $( '#m1' )
+            .removeClass( 'flip' );
+    } )
+$( '#b2' )
+    .click( function () {
+        $( '#m2' )
+            .removeClass( 'flip' );
+    } )
+$( '#b3' )
+    .click( function () {
+        $( '#m3' )
             .removeClass( 'flip' );
     } )
