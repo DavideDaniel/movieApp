@@ -1,10 +1,16 @@
 
-
+li.image {
+    margin: auto;
+    width: 50%;
+    height: 400px;
+    border: red thin solid;
+}
 .panel {
     top: 25%;
     left: 25%;
     width: 40vw;
     height: 60vh;
+
     min-width: 300px;
     min-height: 444px;
     position: relative;
@@ -34,16 +40,16 @@
     transition: all .4s ease-in-out;
 }
 .content .back {
-      
+ display: flex;     
 }
 .content .front{
-
+display: flex;
       
 }
 .panel.flip .poster {
-    z-index: 1000;
-    -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg);
+    z-index: 800;
+    -webkit-transform: rotateY(-180deg);
+    -moz-transform: rotateY(-180deg);
 }
 .panel .movieInfo {
     position: absolute;
@@ -52,11 +58,11 @@
     width: inherit;
     height: inherit;
     text-align: center;
-    -webkit-transform: rotateY(-180deg);
+    -webkit-transform: rotateY(180deg);
     -webkit-transform-style: preserve-3d;
     -webkit-backface-visibility: hidden;
  
-    -moz-transform: rotateY(-180deg);
+    -moz-transform: rotateY(180deg);
     -moz-transform-style: preserve-3d;
     -moz-backface-visibility: hidden;
     /* -- transition is the magic sauce for animation -- */
