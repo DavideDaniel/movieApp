@@ -10,54 +10,60 @@ var firstImg = $( "#i1" )
 var lastImg = $( "#i3" )
     .last();
 
-var xhr = new XMLHttpRequest(); //making an object from a constructor
+
+
+var xhr = new XMLHttpRequest(); 
 
 var loadMovie = function ( elem ) {
 
     xhr.addEventListener( 'load', function ( e ) {
-
-        var d = xhr.responseText //comes in in JSON so you will have to parse it
+        var d = xhr.responseText 
         var parsed = JSON.parse( d );
 
         console.log( elem );
         posterDisplay( elem, parsed );
 
     } )
+    xhr.send();
 }
 
 var searchMovie = function(name) {
-    var safe_url = encodeURI()
+var input = document.querySelector( "input" )
+var safe_url = encodeURI(name)
+var url = "http://omdbapi.com/?t=" + safe_url;
 }
 
+var generateMovieList = function() {
+    var url = "http://omdbapi.com/?t="
+    movies.forEach(function(name){
+        // xhr.open("GET", url+name)
+        movieRequest();
+    })
+}
 
 
 
 var movieRequest = function () {
-    var input = document.querySelector( "input" )
-    var description = document.querySelector( "description" )
     var url = "http://omdbapi.com/?t=" + movies[ counter ]
-
-
     xhr.open( "GET", url );
-    console.log( url );
 
-    xhr.send();
+    
+
     counter++
+
     while ( counter >= movies.length ) {
         counter = 0;
     }
 
-    console.log( counter );
 }
 
 
 var posterDisplay = function ( elem, parsed ) {
-    xhr.addEventListener( 'load', function ( e ) {
-        var d = xhr.responseText //comes in in JSON so you will have to parse it
-        var parsed = JSON.parse( d );
+    xhr.addEventListener( 'load', function () {
+        var poster = 'background:url("' + parsed.Poster + '") no-repeat'
+        console.log(poster);
         $( elem )
-            .css( "background-cover", parsed.Poster )
-
+            .attr( 'style', poster )
     } )
 }
 
