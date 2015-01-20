@@ -12,10 +12,9 @@ var lastImg = $( "#i10" )
 
 var xhr = new XMLHttpRequest();
 
-var movieRequest = function () {
+var movieGET = function () {
     var url = "http://omdbapi.com/?t=" + movies[ counter ]
     xhr.open( "GET", url );
-
     counter++
 
     while ( counter >= movies.length ) {
@@ -23,11 +22,12 @@ var movieRequest = function () {
     }
 }
 
+
 var generateMovieList = function () {
     var url = "http://omdbapi.com/?t="
     movies.forEach( function ( name ) {
         // xhr.open("GET", url+name)
-        movieRequest();
+        movieGET();
     } )
 }
 
@@ -36,11 +36,13 @@ var loadMovie = function ( elem ) {
     xhr.addEventListener( 'load', function ( e ) {
         var d = xhr.responseText
         var parsed = JSON.parse( d );
-
-        console.log( elem );
         posterDisplay( elem, parsed );
-
+        elem.bind()
     } )
+    xhr.send();
+}
+
+var movieSend = function() {
     xhr.send();
 }
 
@@ -59,13 +61,13 @@ var posterDisplay = function ( elem, parsed ) {
     } )
 }
 
-var loadNextMovie = function ( elem ) { // Potentially recursive danger!
-    loadMovie( elem )
-    if ( elem == lastImg ) {
-        firstImg = lastImg.next();
-    }
+// var loadNextMovie = function ( elem ) { // Potentially recursive danger!
+//     loadMovie( elem )
+//     if ( elem == lastImg ) {
+//         firstImg = lastImg.next();
+//     }
 
-}
+// }
 
 var displayInfo = function ( elem ) {
     xhr.addEventListener( 'load', function ( e ) {
@@ -94,7 +96,7 @@ $( ".main" )
         loadNextMovie()
     },
     afterMove: function ( index ) {
-        movieRequest()
+        movieGET()
 
     },
 
