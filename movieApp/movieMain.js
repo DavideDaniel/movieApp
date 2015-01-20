@@ -12,6 +12,28 @@ var lastImg = $( "#i10" )
 
 var xhr = new XMLHttpRequest();
 
+var createDivs = function (posterURL) {
+$( "ul" )
+            .append(
+                $( "<li>", {
+                    "class": "image",
+                    "style": posterURL,
+                } )
+        )
+
+        $( "li" )
+            .click( function () {
+                $( '.back' )
+                    .addClass( 'flip' );
+                displayInfo()
+                $( '.back' )
+                    .click( function () {
+                        $( '.image' )
+                            .removeClass( 'flip' );
+                    } )
+            } )
+}
+
 var movieGET = function () {
     var url = "http://omdbapi.com/?t=" + movies[ counter ]
     xhr.open( "GET", url );
@@ -20,18 +42,7 @@ var movieGET = function () {
         var d = xhr.responseText
         var parsed = JSON.parse( d );
         var poster = 'background:url("' + parsed.Poster + '") no-repeat'
-        $( ".image" )
-            .attr( 'style', poster )
-            .click( function () {
-                $( '.back' )
-                    .addClass( 'flip' );
-                    displayInfo()
-                    .click( function () {
-                        $( '.image' )
-                            .removeClass( 'flip' );
-                    } )
-            } )
-
+        createDivs(poster)
     } )
     xhr.send();
     counter++
@@ -41,12 +52,12 @@ var movieGET = function () {
 }
 
 var generateMovieList = function () {
-    var url = "http://omdbapi.com/?t="
-    movies.forEach( function ( name ) {
+    // var url = "http://omdbapi.com/?t="
+    // movies.forEach( function ( name ) {
         // xhr.open("GET", url+name)
         movieGET();
         loadMovie();
-    } )
+    // } )
 }
 
 var loadMovie = function () {
@@ -100,10 +111,9 @@ $( ".main" )
 .onepage_scroll( {
 
     beforeMove: function ( index ) {
-        movieGET();
+
     },
     afterMove: function ( index ) {
-        loadMovie();
 
     },
 
