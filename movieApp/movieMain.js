@@ -10,7 +10,7 @@ var firstImg = $( "#i1" )
 var lastImg = $( "#i10" )
     .last();
 
-var allMain = document.querySelectorAll( "div.main" )
+
 
 var xhr = new XMLHttpRequest();
 
@@ -51,36 +51,45 @@ var createFlipPanels = function () {
     $( backDiv )
         .appendTo( infoDiv )
 
-    //possibly create img items in here
-   
-//call movie in here!
+    // create img items in here
+    var img = document.createElement( "img" )
+    $( img )
+        .addClass( "image" )
+        .appendTo( frontDiv );
 
+    
+}
+
+movies.forEach(function(){
+    createFlipPanels()
+})
+var allImg = document.querySelectorAll( "img" )
+allImg.forEach(function(img){
+    displayMovie(img)
+})
+// make a function and pass the img in here to get it to work
+var displayMovie = function(img){
 var url = "http://omdbapi.com/?t=" + movies[ counter ]
     var xhr = new XMLHttpRequest();
     xhr.open( "GET", url );
-debugger
+
     xhr.addEventListener( 'load', function () {
         var d = xhr.responseText
         var parsed = JSON.parse( d );
-         var img = document.createElement( "img" )
         $( img )
-        .addClass( "image" )
-        .attr("src", parsed.Poster)
-        .appendTo( frontDiv );
-        
+            .attr( "src", parsed.Poster )
+            
         counter++
         while ( counter >= movies.length ) {
             counter = 0;
         }
-    }
-    )
-    xhr.send(); 
+    } )
+    xhr.send();
 }
 
-$( movies )
-    .each( function () {
-        createFlipPanels();
-    } )
+
+
+
 // $(document).ready(function(){createFlipPanels();})
 
 // $( document )
@@ -113,7 +122,7 @@ $( movies )
 //     } )
 // createFlipPanels();
 
-var movieGET = function (elem) {
+var movieGET = function ( elem ) {
 
     var url = "http://omdbapi.com/?t=" + movies[ counter ]
     var xhr = new XMLHttpRequest();
@@ -123,9 +132,9 @@ var movieGET = function (elem) {
         var d = xhr.responseText
         var parsed = JSON.parse( d );
         // var poster = 'background:url("' + parsed.Poster + '") no-repeat'
-            // var poster = parsed.Poster
-            $(elem).attr("src", parsed.Poster)
-
+        // var poster = parsed.Poster
+        $( elem )
+            .attr( "src", parsed.Poster )
 
         // createPosters( poster )
         //     function frontHandler() {
@@ -202,7 +211,6 @@ var generateMovieList = function () {
 
 //     } )
 // }
-
 
 $( ".main" )
 
