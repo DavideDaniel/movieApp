@@ -18,19 +18,20 @@ var createFlipPanel = function () {
     var main = document.querySelector("div.main");
 
     var section = document.createElement("section")
-    
     $(section).appendTo(main)
-
-
-
+    
     var insidePanel = document.createElement("div")
-
-
     $(insidePanel).addClass("inside panel")
-    //     "id": "'m" + index + "'"
-    // });
+    // $(insidePanel).attr("id", "'m" + index + "'") // this works for looping FYI
     $(section).append(insidePanel);
 
+    var posterDiv = document.createElement("div")
+    $(posterDiv).addClass("poster")
+    $(posterDiv).appendTo(insidePanel)
+    
+    var frontDiv = document.createElement("div")
+    $(frontDiv).addClass("content front")
+    $(frontDiv).appendTo(posterDiv)
 }
 createFlipPanel();
 
