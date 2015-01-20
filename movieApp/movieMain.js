@@ -23,11 +23,13 @@ var createFlipPanel = function () {
 
 
 
-    // var insidePanel = $('div', {
-    //     "class": "inside panel",
+    var insidePanel = document.createElement("div")
+
+
+    $(insidePanel).addClass("inside panel")
     //     "id": "'m" + index + "'"
     // });
-    // $(section).append(insidePanel);
+    $(section).append(insidePanel);
 
 }
 createFlipPanel();
