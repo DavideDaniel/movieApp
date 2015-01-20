@@ -14,7 +14,7 @@ var allMain = document.querySelectorAll( "div.main" )
 
 var xhr = new XMLHttpRequest();
 
-var createFlipPanels = function (posterURL) {
+var createFlipPanels = function () {
     // Select main div
     var main = document.querySelector( "div.main" );
     // create section
@@ -52,18 +52,36 @@ var createFlipPanels = function (posterURL) {
         .appendTo( infoDiv )
 
     //possibly create img items in here
-    var img = document.createElement( "img" )
-    $( img )
+   
+//call movie in here!
+
+var url = "http://omdbapi.com/?t=" + movies[ counter ]
+    var xhr = new XMLHttpRequest();
+    xhr.open( "GET", url );
+debugger
+    xhr.addEventListener( 'load', function () {
+        var d = xhr.responseText
+        var parsed = JSON.parse( d );
+         var img = document.createElement( "img" )
+        $( img )
         .addClass( "image" )
-        .src( posterURL )
+        .attr("src", parsed.Poster)
         .appendTo( frontDiv );
+        
+        counter++
+        while ( counter >= movies.length ) {
+            counter = 0;
+        }
+    }
+    )
+    xhr.send(); 
 }
 
-// createFlipPanels();
+$( movies )
+    .each( function () {
+        createFlipPanels();
+    } )
 // $(document).ready(function(){createFlipPanels();})
-var createPosters = function ( posterURL ) {
-    
-}
 
 // $( document )
 //     .on( 'click', '.image', function () {
@@ -93,18 +111,22 @@ var createPosters = function ( posterURL ) {
 //         $( '.image' )
 //             .removeClass( 'flip' );
 //     } )
+// createFlipPanels();
 
-var movieGET = function () {
+var movieGET = function (elem) {
 
     var url = "http://omdbapi.com/?t=" + movies[ counter ]
+    var xhr = new XMLHttpRequest();
     xhr.open( "GET", url );
 
     xhr.addEventListener( 'load', function () {
         var d = xhr.responseText
         var parsed = JSON.parse( d );
         // var poster = 'background:url("' + parsed.Poster + '") no-repeat'
-        var poster = parsed.Poster
-        createFlipPanels( poster );
+            // var poster = parsed.Poster
+            $(elem).attr("src", parsed.Poster)
+
+
         // createPosters( poster )
         //     function frontHandler() {
         //     $( '.back' )
@@ -135,8 +157,8 @@ var generateMovieList = function () {
     // var url = "http://omdbapi.com/?t="
     movies.forEach( function ( name ) {
         // xhr.open("GET", url+name)
-        
-        movieGET();
+
+        // movieGET();
 
     } )
 }
@@ -181,7 +203,6 @@ var generateMovieList = function () {
 //     } )
 // }
 
-generateMovieList();
 
 $( ".main" )
 
