@@ -10,68 +10,82 @@ var firstImg = $( "#i1" )
 var lastImg = $( "#i10" )
     .last();
 
-var allMain = document.querySelectorAll("div.main")
+var allMain = document.querySelectorAll( "div.main" )
 
 var xhr = new XMLHttpRequest();
 
-var createFlipPanel = function () {
+var createFlipPanels = function (posterURL) {
     // Select main div
-    var main = document.querySelector("div.main");
+    var main = document.querySelector( "div.main" );
     // create section
-    var section = document.createElement("section")
-    $(section).appendTo(main)
+    var section = document.createElement( "section" )
+    $( section )
+        .appendTo( main )
     // create inside div to hold flipping divs
-    var insidePanel = document.createElement("div")
-    $(insidePanel).addClass("inside panel")
+    var insidePanel = document.createElement( "div" )
+    $( insidePanel )
+        .addClass( "inside panel" )
     // $(insidePanel).attr("id", "'m" + index + "'") // this works for looping FYI
-    $(section).append(insidePanel);
+    $( section )
+        .append( insidePanel );
     // create 2 divs to hold front and back divs - the divs will flip inside these
-    var posterDiv = document.createElement("div")
-    $(posterDiv).addClass("poster")
-    $(posterDiv).appendTo(insidePanel)
-    var infoDiv = document.createElement("div")
-    $(infoDiv).addClass("movieInfo")
-    $(infoDiv).appendTo(insidePanel)
+    var posterDiv = document.createElement( "div" )
+    $( posterDiv )
+        .addClass( "poster" )
+    $( posterDiv )
+        .appendTo( insidePanel )
+    var infoDiv = document.createElement( "div" )
+    $( infoDiv )
+        .addClass( "movieInfo" )
+    $( infoDiv )
+        .appendTo( insidePanel )
     // create 2 divs to hold front and back content
-    var frontDiv = document.createElement("div")
-    $(frontDiv).addClass("content front")
-    $(frontDiv).appendTo(posterDiv)
-    var backDiv = document.createElement("div")
-    $(backDiv).addClass("content back")
-    $(backDiv).appendTo(infoDiv)
+    var frontDiv = document.createElement( "div" )
+    $( frontDiv )
+        .addClass( "content front" )
+    $( frontDiv )
+        .appendTo( posterDiv )
+    var backDiv = document.createElement( "div" )
+    $( backDiv )
+        .addClass( "content back" )
+    $( backDiv )
+        .appendTo( infoDiv )
 
-    //possibly create li items in here
+    //possibly create img items in here
+    var img = document.createElement( "img" )
+    $( img )
+        .addClass( "image" )
+        .src( posterURL )
+        .appendTo( frontDiv );
 }
 
-createFlipPanel();
+// createFlipPanels();
+// $(document).ready(function(){createFlipPanels();})
+var createPosters = function ( posterURL ) {
+    
+}
 
-// var createPosters = function ( posterURL ) {
-//     $( "<li>", {
-//         "class": "image",
-//         "style": posterURL,
-//     } )
-//         .appendTo( 'div.content.front' );
 // $( document )
 //     .on( 'click', '.image', function () {
 //         alert( this.innerHTML );
 //     } );
 // }
 
-// // function frontHandler() {
-// //         $( '.back' )
-// //             .addClass( 'flip' );
-// //         displayInfo();
-// //     }
-// //     $( "div.front" )
-// //         .each( function () {
-// //             var li = $( "<li>", {
-// //                 "class": "image",
-// //                 "style": posterURL,
-// //             } );
-// //             $( this )
-// //                 .append( li );
-// //             li.click( frontHandler );
-// //         } );
+// function frontHandler() {
+//         $( '.back' )
+//             .addClass( 'flip' );
+//         displayInfo();
+//     }
+//     $( "div.front" )
+//         .each( function () {
+//             var li = $( "<li>", {
+//                 "class": "image",
+//                 "style": posterURL,
+//             } );
+//             $( this )
+//                 .append( li );
+//             li.click( frontHandler );
+//         } );
 
 // var BackHandlers = function ( elem ) {}
 // $( '.back' )
@@ -80,48 +94,52 @@ createFlipPanel();
 //             .removeClass( 'flip' );
 //     } )
 
-// var movieGET = function () {
-//     var url = "http://omdbapi.com/?t=" + movies[ counter ]
-//     xhr.open( "GET", url );
+var movieGET = function () {
 
-//     xhr.addEventListener( 'load', function ( e ) {
-//         var d = xhr.responseText
-//         var parsed = JSON.parse( d );
-//         var poster = 'background:url("' + parsed.Poster + '") no-repeat'
-//         createPosters( poster )
-//         //     function frontHandler() {
-//         //     $( '.back' )
-//         //         .addClass( 'flip' );
-//         //     displayInfo();
-//         // }
-//         // $( "div.front" )
-//         //     .each( function () {
-//         //         var li = $( "<li>", {
-//         //             "class": "image",
-//         //             "style": poster,
-//         //         } );
-//         //         $( this )
-//         //             .append( li );
-//         //         li.click( frontHandler );
-//         //     } );
-//         // } )
-//         xhr.send();
-//         counter++
-//         while ( counter >= movies.length ) {
-//             counter = 0;
-//         }
-//     } )
+    var url = "http://omdbapi.com/?t=" + movies[ counter ]
+    xhr.open( "GET", url );
 
-// }
+    xhr.addEventListener( 'load', function () {
+        var d = xhr.responseText
+        var parsed = JSON.parse( d );
+        // var poster = 'background:url("' + parsed.Poster + '") no-repeat'
+        var poster = parsed.Poster
+        createFlipPanels( poster );
+        // createPosters( poster )
+        //     function frontHandler() {
+        //     $( '.back' )
+        //         .addClass( 'flip' );
+        //     displayInfo();
+        // }
+        // $( "div.front" )
+        //     .each( function () {
+        //         var li = $( "<li>", {
+        //             "class": "image",
+        //             "style": poster,
+        //         } );
+        //         $( this )
+        //             .append( li );
+        //         li.click( frontHandler );
+        //     } );
+        // } )
+        xhr.send();
+        counter++
+        while ( counter >= movies.length ) {
+            counter = 0;
+        }
+    } )
 
-// var generateMovieList = function () {
-//     // var url = "http://omdbapi.com/?t="
-//     movies.forEach( function ( name ) {
-//         // xhr.open("GET", url+name)
-//         movieGET();
+}
 
-//     } )
-// }
+var generateMovieList = function () {
+    // var url = "http://omdbapi.com/?t="
+    movies.forEach( function ( name ) {
+        // xhr.open("GET", url+name)
+        
+        movieGET();
+
+    } )
+}
 
 // var loadMovie = function () {
 
@@ -163,11 +181,7 @@ createFlipPanel();
 //     } )
 // }
 
-// $( document )
-//     .ready( function () {
-//         generateMovieList();
-
-//     } )
+generateMovieList();
 
 $( ".main" )
 
@@ -186,8 +200,6 @@ $( ".main" )
     loop: false
 
 } )
-
-
 
 // $( 'li' )
 //     .click( function () {
