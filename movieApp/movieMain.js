@@ -12,27 +12,31 @@ var lastImg = $( "#i10" )
 
 var xhr = new XMLHttpRequest();
 
-var createDivs = function (posterURL) {
-$( "ul" )
-            .append(
-                $( "<li>", {
-                    "class": "image",
-                    "style": posterURL,
-                } )
-        )
+var createPosters = function ( posterURL ) {
+    function frontHandler() {
+        $( '.back' )
+            .addClass( 'flip' );
+        displayInfo();
+    }
+    $( "div.front" )
+        .each( function () {
+            var li = $( "<li>", {
+                "class": "image",
+                "style": posterURL,
+            } );
+            $( this )
+                .append( li );
+            li.click( frontHandler );
+        } );
 
-        $( "li" )
-            .click( function () {
-                $( '.back' )
-                    .addClass( 'flip' );
-                displayInfo()
-                $( '.back' )
-                    .click( function () {
-                        $( '.image' )
-                            .removeClass( 'flip' );
-                    } )
-            } )
 }
+
+var BackHandlers = function ( elem ) {}
+$( '.back' )
+    .click( function () {
+        $( '.image' )
+            .removeClass( 'flip' );
+    } )
 
 var movieGET = function () {
     var url = "http://omdbapi.com/?t=" + movies[ counter ]
@@ -42,7 +46,7 @@ var movieGET = function () {
         var d = xhr.responseText
         var parsed = JSON.parse( d );
         var poster = 'background:url("' + parsed.Poster + '") no-repeat'
-        createDivs(poster)
+        createPosters( poster )
     } )
     xhr.send();
     counter++
@@ -53,11 +57,11 @@ var movieGET = function () {
 
 var generateMovieList = function () {
     // var url = "http://omdbapi.com/?t="
-    // movies.forEach( function ( name ) {
-        // xhr.open("GET", url+name)
-        movieGET();
-        loadMovie();
-    // } )
+    movies.forEach( function ( name ) {
+    // xhr.open("GET", url+name)
+    movieGET();
+    loadMovie();
+    } )
 }
 
 var loadMovie = function () {
@@ -124,9 +128,9 @@ $( ".main" )
 
 } )
 
-$( '#i1' )
+$( 'li' )
     .click( function () {
-        $( '#m1' )
+        $( '.back' )
             .addClass( 'flip' );
         displayInfo()
     } )
