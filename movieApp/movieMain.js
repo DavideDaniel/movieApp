@@ -15,24 +15,34 @@ var allMain = document.querySelectorAll("div.main")
 var xhr = new XMLHttpRequest();
 
 var createFlipPanel = function () {
+    // Select main div
     var main = document.querySelector("div.main");
-
+    // create section
     var section = document.createElement("section")
     $(section).appendTo(main)
-    
+    // create inside div to hold flipping divs
     var insidePanel = document.createElement("div")
     $(insidePanel).addClass("inside panel")
     // $(insidePanel).attr("id", "'m" + index + "'") // this works for looping FYI
     $(section).append(insidePanel);
-
+    // create 2 divs to hold front and back divs - the divs will flip inside these
     var posterDiv = document.createElement("div")
     $(posterDiv).addClass("poster")
     $(posterDiv).appendTo(insidePanel)
-    
+    var infoDiv = document.createElement("div")
+    $(infoDiv).addClass("movieInfo")
+    $(infoDiv).appendTo(insidePanel)
+    // create 2 divs to hold front and back content
     var frontDiv = document.createElement("div")
     $(frontDiv).addClass("content front")
     $(frontDiv).appendTo(posterDiv)
+    var backDiv = document.createElement("div")
+    $(backDiv).addClass("content back")
+    $(backDiv).appendTo(infoDiv)
+
+    //possibly create li items in here
 }
+
 createFlipPanel();
 
 // var createPosters = function ( posterURL ) {
