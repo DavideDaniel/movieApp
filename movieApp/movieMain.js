@@ -10,8 +10,6 @@ var firstImg = $( "#i1" )
 var lastImg = $( "#i10" )
     .last();
 
-
-
 var xhr = new XMLHttpRequest();
 
 var createFlipPanels = function () {
@@ -57,18 +55,60 @@ var createFlipPanels = function () {
         .addClass( "image" )
         .appendTo( frontDiv );
 
+    // create back content
+    var hTitle = document.createElement( "h3" )
+    $( hTitle )
+        .attr( "id", "title" )
+    $( hTitle )
+        .appendTo( backDiv )
+    var hYear = document.createElement( "h3" )
+    $( hYear )
+        .attr( "id", "year" )
+    $( hYear )
+        .appendTo( backDiv )
+    var hDirector = document.createElement( "h3" )
+    $( hDirector )
+        .attr( "id", "director" )
+    $( hDirector )
+        .appendTo( backDiv )
+    var hActors = document.createElement( "h3" )
+    $( hActors )
+        .attr( "id", "actors" )
+    $( hActors )
+        .appendTo( backDiv )
+    var hRating = document.createElement( "h3" )
+    $( hRating )
+        .attr( "id", "rating" )
+    $( hRating )
+        .appendTo( backDiv )
+    var hPlot = document.createElement( "h3" )
+    $( hPlot )
+        .attr( "id", "plot" )
+    $( hPlot )
+        .appendTo( backDiv )
     
 }
 
-movies.forEach(function(){
+movies.forEach( function () {
     createFlipPanels()
-})
+    $( ".front" )
+        .click( function () {
+            $( '.inside.panel' )
+                .addClass( 'flip' );
+
+        } )
+
+    $( ".back" )
+        .click( function () {
+            $( ".inside.panel" )
+                .removeClass( 'flip' );
+        } )
+} )
 var allImg = document.querySelectorAll( "img" )
 
-
 // make a function and pass the img in here to get it to work
-var displayMovie = function(img){
-var url = "http://omdbapi.com/?t=" + movies[i]
+var displayMovie = function ( img ) {
+    var url = "http://omdbapi.com/?t=" + movies[ i ]
     var xhr = new XMLHttpRequest();
     xhr.open( "GET", url );
 
@@ -77,24 +117,28 @@ var url = "http://omdbapi.com/?t=" + movies[i]
         var parsed = JSON.parse( d );
         $( img )
             .attr( "src", parsed.Poster )
+        $("#title").text(parsed.Title)
+        $("#year").text(parsed.Year)
+        $("#actors").text(parsed.Actors)
+        $("#director").text(parsed.Director)
+        $("#plot").text(parsed.Plot)
+        $("#rating").text(parsed.Rated)
+
+
             
-            // stupid while loop
+        // stupid while loop
         // while ( counter >= movies.length ) {
-            // counter = 0;
+        // counter = 0;
         // }
     } )
     xhr.send();
 }
 
 // OMG for loop wins! =D
-for (var i = 0; i < allImg.length; i++) {
-    displayMovie(allImg[i])
-    
+for ( var i = 0; i < allImg.length; i++ ) {
+    displayMovie( allImg[ i ] )
+
 };
-
-
-
-
 
 // $(document).ready(function(){createFlipPanels();})
 
@@ -139,8 +183,8 @@ var movieGET = function ( elem ) {
         var parsed = JSON.parse( d );
         // var poster = 'background:url("' + parsed.Poster + '") no-repeat'
         // var poster = parsed.Poster
-        $( elem )
-            .attr( "src", parsed.Poster )
+        // $( elem )
+        //     .attr( "src", parsed.Poster )
 
         // createPosters( poster )
         //     function frontHandler() {
