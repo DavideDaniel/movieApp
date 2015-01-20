@@ -15,34 +15,45 @@ var xhr = new XMLHttpRequest();
 var movieGET = function () {
     var url = "http://omdbapi.com/?t=" + movies[ counter ]
     xhr.open( "GET", url );
-    counter++
 
+    xhr.addEventListener( 'load', function ( e ) {
+        var d = xhr.responseText
+        var parsed = JSON.parse( d );
+        var poster = 'background:url("' + parsed.Poster + '") no-repeat'
+        $( ".image" )
+            .attr( 'style', poster )
+            .click( function () {
+                $( '.back' )
+                    .addClass( 'flip' );
+                    displayInfo()
+                    .click( function () {
+                        $( '.image' )
+                            .removeClass( 'flip' );
+                    } )
+            } )
+
+    } )
+    xhr.send();
+    counter++
     while ( counter >= movies.length ) {
         counter = 0;
     }
 }
-
 
 var generateMovieList = function () {
     var url = "http://omdbapi.com/?t="
     movies.forEach( function ( name ) {
         // xhr.open("GET", url+name)
         movieGET();
+        loadMovie();
     } )
 }
 
-var loadMovie = function ( elem ) {
+var loadMovie = function () {
 
-    xhr.addEventListener( 'load', function ( e ) {
-        var d = xhr.responseText
-        var parsed = JSON.parse( d );
-        posterDisplay( elem, parsed );
-        elem.bind()
-    } )
-    xhr.send();
 }
 
-var movieSend = function() {
+var movieSend = function () {
     xhr.send();
 }
 
@@ -52,14 +63,14 @@ var searchMovie = function ( name ) {
     var url = "http://omdbapi.com/?t=" + safe_url;
 }
 
-var posterDisplay = function ( elem, parsed ) {
-    xhr.addEventListener( 'load', function () {
-        var poster = 'background:url("' + parsed.Poster + '") no-repeat'
-        console.log( poster );
-        $( elem )
-            .attr( 'style', poster )
-    } )
-}
+// var posterDisplay = function ( elem, parsed ) {
+//     xhr.addEventListener( 'load', function () {
+//         var poster = 'background:url("' + parsed.Poster + '") no-repeat'
+//         console.log( poster );
+//         $( elem )
+//             .attr( 'style', poster )
+//     } )
+// }
 
 // var loadNextMovie = function ( elem ) { // Potentially recursive danger!
 //     loadMovie( elem )
@@ -81,10 +92,6 @@ var displayInfo = function ( elem ) {
 $( document )
     .ready( function () {
         generateMovieList();
-        $( "image" )
-            .each( function ( index ) {
-                movies.loadMovie( index )
-            } )
 
     } )
 
@@ -93,10 +100,10 @@ $( ".main" )
 .onepage_scroll( {
 
     beforeMove: function ( index ) {
-        loadNextMovie()
+        movieGET();
     },
     afterMove: function ( index ) {
-        movieGET()
+        loadMovie();
 
     },
 
