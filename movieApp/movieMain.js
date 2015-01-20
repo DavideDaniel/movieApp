@@ -64,12 +64,11 @@ movies.forEach(function(){
     createFlipPanels()
 })
 var allImg = document.querySelectorAll( "img" )
-allImg.forEach(function(img){
-    displayMovie(img)
-})
+
+
 // make a function and pass the img in here to get it to work
 var displayMovie = function(img){
-var url = "http://omdbapi.com/?t=" + movies[ counter ]
+var url = "http://omdbapi.com/?t=" + movies[i]
     var xhr = new XMLHttpRequest();
     xhr.open( "GET", url );
 
@@ -79,13 +78,20 @@ var url = "http://omdbapi.com/?t=" + movies[ counter ]
         $( img )
             .attr( "src", parsed.Poster )
             
-        counter++
-        while ( counter >= movies.length ) {
-            counter = 0;
-        }
+            // stupid while loop
+        // while ( counter >= movies.length ) {
+            // counter = 0;
+        // }
     } )
     xhr.send();
 }
+
+// OMG for loop wins! =D
+for (var i = 0; i < allImg.length; i++) {
+    displayMovie(allImg[i])
+    
+};
+
 
 
 
